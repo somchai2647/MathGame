@@ -101,8 +101,4 @@ public class Leaderboard {
         return max;
     }
 
-
-    public static void main(String[] args) {
-        new Leaderboard();
-    }
 }
