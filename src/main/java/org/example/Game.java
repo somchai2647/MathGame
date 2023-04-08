@@ -147,10 +147,12 @@ public class Game extends JFrame {
     }
 
     private void updateScore() {
-        scoreLabel.setText("คะแนนสะสม: " + String.valueOf(score));
 
-        if(score == 10){
-            JOptionPane.showMessageDialog(null, "คุณได้คะแนนสะสม 10 คะแนน");
+        scoreLabel.setText("คะแนนสะสม: " + String.valueOf(score));
+        Leaderboard table = new Leaderboard();
+        if (score >= table.getMin()) {
+            String name = JOptionPane.showInputDialog("Enter your name:");
+            table.saveScore(new Player(name, score));
         }
     }
 }

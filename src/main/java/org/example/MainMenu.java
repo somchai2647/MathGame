@@ -16,6 +16,10 @@ public class MainMenu extends JFrame {
         this.setContentPane(MainMenuPanel);
         this.setSize(500, 500);
         this.setVisible(true);
+
+//        Leaderboard.loadDataFormFile();
+//        System.out.println(Leaderboard.getScore());
+
         btnPlay.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -23,19 +27,25 @@ public class MainMenu extends JFrame {
                 dispose();
             }
         });
+
         btnExit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
             }
         });
+
         btnScore.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                Leaderboard table = new Leaderboard();
+                table.scoreTable();
+                System.out.println("Min" + table.getMin());
             }
         });
+
     }
+
 
     public static void main(String[] args) {
         new MainMenu();
