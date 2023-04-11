@@ -30,7 +30,7 @@ public class Game extends JFrame {
         df.setMaximumFractionDigits(2);
         generateQuestion();
 
-        scoreLabel.setText("คะแนนสะสม: " + String.valueOf(score));
+        scoreLabel.setText("คะแนนสะสม: " + String.valueOf(score) + " ผิด " + wrongCount + "/3 ครั้ง");
         System.out.println(textResult);
 
         answer1.addActionListener(new ActionListener() {
@@ -40,12 +40,11 @@ public class Game extends JFrame {
                 if (answer1.getText().equals(String.valueOf(textResult))) {
                     System.out.println("true");
                     score += 1;
-
-                    updateScore();
                 } else {
                     System.out.println("false");
                     wrongCount += 1;
                 }
+                updateScore();
                 generateQuestion();
             }
         });
@@ -55,11 +54,11 @@ public class Game extends JFrame {
                 if (answer2.getText().equals(String.valueOf(textResult))) {
                     System.out.println("true");
                     score += 1;
-                    updateScore();
                 } else {
                     System.out.println("false");
                     wrongCount += 1;
                 }
+                updateScore();
                 generateQuestion();
             }
         });
@@ -69,12 +68,11 @@ public class Game extends JFrame {
                 if (answer3.getText().equals(String.valueOf(textResult))) {
                     System.out.println("true");
                     score += 1;
-                    updateScore();
                 } else {
                     System.out.println("false");
                     wrongCount += 1;
-
                 }
+                updateScore();
                 generateQuestion();
             }
         });
@@ -84,13 +82,11 @@ public class Game extends JFrame {
                 if (answer4.getText().equals(String.valueOf(textResult))) {
                     System.out.println("true");
                     score += 1;
-
-                    updateScore();
                 } else {
                     System.out.println("false");
                     wrongCount += 1;
-
                 }
+                updateScore();
                 generateQuestion();
             }
         });
@@ -104,11 +100,19 @@ public class Game extends JFrame {
     }
 
     private void generateQuestion() {
+        int difficulty = 1;
+        if (score >= 5 && score <= 10) {
+            difficulty = 2;
+        } else if (score >= 11 && score <= 20) {
+            difficulty = 3;
+        }
+
         MathExpressionGenerator quest = new MathExpressionGenerator();
-        String x = quest.generateExpression(1);
+        String x = quest.generateExpression(difficulty);
         Resolver calculator = new Resolver();
         double result = calculator.setExpression(x).solveExpression().result;
         textResult = String.valueOf(result);
+        System.out.println(textResult);
         questionText.setText(x);
         //random 1 to 4
         int random = (int) random(1, 4, false);
@@ -151,13 +155,18 @@ public class Game extends JFrame {
 
     private void updateScore() {
 
-        scoreLabel.setText("คะแนนสะสม: " + String.valueOf(score));
+        scoreLabel.setText("คะแนนสะสม: " + String.valueOf(score) + " ผิด " + wrongCount + "/3 ครั้ง");
         Leaderboard table = new Leaderboard();
-        if (score >= table.getMin() || wrongCount >= 3) {
+        if (wrongCount == 3) {
             String name = JOptionPane.showInputDialog("Enter your name:");
+
+            if (name == null) {
+                name = "Anonymous";
+            }
+
             table.saveScore(new Player(name, score));
-//            dispose();
-//            new MainMenu();
+            dispose();
+            new MainMenu();
         }
     }
 }

@@ -46,10 +46,10 @@ public class MathExpressionGenerator {
             }
 
 //             Randomly insert parentheses around sub-expressions
-            if (i < numExpressions - 1 && rand.nextBoolean()) {
-                sb.insert(0, "(");
-                sb.append(")");
-            }
+//            if (i < numExpressions - 1 && rand.nextBoolean()) {
+//                sb.insert(0, "(");
+//                sb.append(")");
+//            }
         }
         this.expression = sb.toString();
         return sb.toString();
