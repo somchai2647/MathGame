@@ -26,6 +26,19 @@ public class Leaderboard {
             FileWriter fw = new FileWriter("leaderboard.dat", true);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter pw = new PrintWriter(bw);
+
+            //check name duplicate
+            for (int i = 0; i < TOP_PLAYER; i++) {
+                if (players[i] != null) {
+                    if (players[i].getName().equals(player.getName())) {
+                        players[i].setScore(player.getScore());
+                        player = players[i];
+                        break;
+                    }
+                }
+            }
+
+
             pw.println(player.getName() + "," + player.getScore());
             pw.close();
         } catch (IOException e) {
@@ -40,6 +53,12 @@ public class Leaderboard {
             String line;
             int i = 0;
             while ((line = br.readLine()) != null) {
+                if (i == TOP_PLAYER - 1) {
+                    break;
+                }
+                if (line.equals("")) {
+                    continue;
+                }
                 String[] tokens = line.split(",");
                 this.players[i] = new Player(tokens[0], Integer.parseInt(tokens[1]));
                 //min max
@@ -56,8 +75,6 @@ public class Leaderboard {
                 }
                 i++;
             }
-
-
             br.close();
             System.out.println(min);
             System.out.println(max);

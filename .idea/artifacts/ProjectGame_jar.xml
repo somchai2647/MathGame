@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ProjectGame:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ProjectGame_jar</output-path>
+    <root id="archive" name="ProjectGame.jar">
+      <element id="module-output" name="ProjectGame" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/github/ayaanqui/expression-resolver/-737ed67733-1/expression-resolver--737ed67733-1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

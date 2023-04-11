@@ -16,8 +16,8 @@ public class Game extends JFrame {
     private JButton btnExit;
     private JLabel scoreLabel;
     private static String textResult = "";
-
     private int score = 0;
+    private int wrongCount = 0;
 
     DecimalFormat df = new DecimalFormat();
 
@@ -40,9 +40,11 @@ public class Game extends JFrame {
                 if (answer1.getText().equals(String.valueOf(textResult))) {
                     System.out.println("true");
                     score += 1;
+
                     updateScore();
                 } else {
                     System.out.println("false");
+                    wrongCount += 1;
                 }
                 generateQuestion();
             }
@@ -50,13 +52,13 @@ public class Game extends JFrame {
         answer2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(answer2.getText() + " " + textResult + " ");
                 if (answer2.getText().equals(String.valueOf(textResult))) {
                     System.out.println("true");
                     score += 1;
                     updateScore();
                 } else {
                     System.out.println("false");
+                    wrongCount += 1;
                 }
                 generateQuestion();
             }
@@ -64,14 +66,14 @@ public class Game extends JFrame {
         answer3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(answer3.getText() + " " + textResult + " ");
-
                 if (answer3.getText().equals(String.valueOf(textResult))) {
                     System.out.println("true");
                     score += 1;
                     updateScore();
                 } else {
                     System.out.println("false");
+                    wrongCount += 1;
+
                 }
                 generateQuestion();
             }
@@ -79,13 +81,15 @@ public class Game extends JFrame {
         answer4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(answer4.getText() + " " + textResult + " ");
                 if (answer4.getText().equals(String.valueOf(textResult))) {
                     System.out.println("true");
                     score += 1;
+
                     updateScore();
                 } else {
                     System.out.println("false");
+                    wrongCount += 1;
+
                 }
                 generateQuestion();
             }
@@ -101,14 +105,13 @@ public class Game extends JFrame {
 
     private void generateQuestion() {
         MathExpressionGenerator quest = new MathExpressionGenerator();
-        String x = quest.generateExpression(3);
+        String x = quest.generateExpression(1);
         Resolver calculator = new Resolver();
         double result = calculator.setExpression(x).solveExpression().result;
         textResult = String.valueOf(result);
         questionText.setText(x);
         //random 1 to 4
         int random = (int) random(1, 4, false);
-        System.out.println(textResult);
         switch (random) {
             case 1 -> {
                 answer1.setText(String.valueOf(result));
@@ -150,9 +153,11 @@ public class Game extends JFrame {
 
         scoreLabel.setText("คะแนนสะสม: " + String.valueOf(score));
         Leaderboard table = new Leaderboard();
-        if (score >= table.getMin()) {
+        if (score >= table.getMin() || wrongCount >= 3) {
             String name = JOptionPane.showInputDialog("Enter your name:");
             table.saveScore(new Player(name, score));
+//            dispose();
+//            new MainMenu();
         }
     }
 }
